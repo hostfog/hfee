@@ -76,7 +76,7 @@ func main() {
 	case "rm":
 		err = withServer(func() error { return needArgs(args, 1, "rm <model>", func() error { return remove(args) }) })
 	case "version", "--version", "-v":
-		fmt.Println("hfee version", server.Version)
+		fmt.Println("hfee version", server.Version, "(HostFog Ltd)")
 	case "help", "--help", "-h":
 		fmt.Print(usage)
 	default:

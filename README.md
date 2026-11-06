@@ -1,5 +1,7 @@
 # HFee
 
+By [HostFog Ltd](https://github.com/hostfog).
+
 Run large language models on your own machine. HFee downloads GGUF models,
 runs them on the CPU and serves them over an Ollama-compatible API and an
 OpenAI-compatible API.
@@ -137,4 +139,5 @@ second and `llama3.2:1b` about 7.
 
 ## Licence
 
-MIT
+MIT © 2026 HostFog Ltd. HFee AI, a chat website built on HFee, is at
+[hostfog/hfee-ai](https://github.com/hostfog/hfee-ai).
