@@ -1,13 +1,25 @@
-# HFee
+<p align="center">
+  <img src="docs/logo.png" width="88" alt="HFee logo">
+</p>
 
-By [HostFog Ltd](https://github.com/hostfog).
+<h1 align="center">HFee</h1>
 
-Run large language models on your own machine. HFee downloads GGUF models,
-runs them on the CPU and serves them over an Ollama-compatible API and an
-OpenAI-compatible API.
+<p align="center">
+  Run large language models on your own machine.<br>
+  One small binary, pure Go, no GPU and no dependencies.
+</p>
 
-It is written in pure Go with no third-party dependencies, so it builds to a
-single binary for Linux, macOS and Windows.
+<p align="center">
+  <a href="https://github.com/hostfog/hfee/releases/latest"><img src="https://img.shields.io/github/v/release/hostfog/hfee?color=d87858&label=release" alt="Latest release"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/licence-MIT-d87858" alt="MIT licence"></a>
+  <img src="https://img.shields.io/badge/go-1.22+-00ADD8" alt="Go 1.22+">
+  <img src="https://img.shields.io/badge/runs%20on-Linux%20%7C%20macOS%20%7C%20Windows-555" alt="Platforms">
+</p>
+
+By [HostFog Ltd](https://github.com/hostfog). HFee downloads GGUF models, runs
+them on the CPU and serves them over an Ollama-compatible API and an
+OpenAI-compatible API, so the apps and SDKs you already use work with it.
+Want a full chat website on top? See [HFee AI](https://github.com/hostfog/hfee-ai).
 
 ```
 $ hfee run qwen2.5:0.5b
@@ -17,19 +29,82 @@ The capital of France is Paris.
 
 ## Install
 
+### Download a binary
+
+Get the file for your system from the
+[latest release](https://github.com/hostfog/hfee/releases/latest):
+
+| System | File |
+| --- | --- |
+| Linux (x86-64 / ARM) | `hfee-linux-amd64` / `hfee-linux-arm64` |
+| macOS (Intel / Apple silicon) | `hfee-darwin-amd64` / `hfee-darwin-arm64` |
+| Windows (x86-64 / ARM) | `hfee-windows-amd64.exe` / `hfee-windows-arm64.exe` |
+
+**Linux and macOS**
+
+```bash
+curl -fLo hfee https://github.com/hostfog/hfee/releases/latest/download/hfee-linux-amd64
+chmod +x hfee
+sudo mv hfee /usr/local/bin/
+hfee run qwen2.5:0.5b
+```
+
+Swap `linux-amd64` for your system. On macOS, if you downloaded with a
+browser, run `xattr -d com.apple.quarantine hfee` once.
+
+**Windows**
+
+1. Download `hfee-windows-amd64.exe` and rename it to `hfee.exe`.
+2. Move it to a folder such as `C:\Program Files\HFee` and add that folder to
+   your `PATH` (*Settings → System → About → Advanced system settings →
+   Environment Variables*).
+3. Open a new terminal and run `hfee run qwen2.5:0.5b`.
+
+Each release has a `SHA256SUMS` file to check your download.
+
+### With Go
+
 Requires Go 1.22 or newer.
 
 ```bash
 go install github.com/hostfog/hfee/cmd/hfee@latest
 ```
 
-Or build from source:
+### From source
 
 ```bash
 git clone https://github.com/hostfog/hfee
 cd hfee
 go build -o hfee ./cmd/hfee
 ```
+
+### Run it as a service (Linux)
+
+```bash
+sudo useradd --system --home /var/lib/hfee --create-home hfee
+sudo tee /etc/systemd/system/hfee.service >/dev/null <<'UNIT'
+[Unit]
+Description=HFee
+After=network-online.target
+
+[Service]
+User=hfee
+Environment=HFEE_MODELS=/var/lib/hfee/models
+ExecStart=/usr/local/bin/hfee serve
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+UNIT
+sudo systemctl enable --now hfee
+HFEE_HOST=127.0.0.1:11500 hfee pull qwen2.5:0.5b
+```
+
+### Uninstall
+
+Delete the binary and the models folder, `~/.hfee`. If you set up the
+service: `sudo systemctl disable --now hfee`, then delete
+`/etc/systemd/system/hfee.service` and `/var/lib/hfee`.
 
 ## Usage
 
