@@ -131,9 +131,9 @@ internal/ggml       quantised weight formats and matrix kernels
 - Chat templates are recognised from the model's metadata (Llama 3, ChatML,
   Mistral, Zephyr).
 
-HFee runs on the CPU only. Speed depends mostly on memory bandwidth and
-core count; on an 8–16 core desktop expect roughly 30+ tokens per second
-for 0.5B models and around 10 for 7B models.
+HFee runs on the CPU only, so speed depends mostly on memory bandwidth and
+core count. On a 2-core VPS, `qwen2.5:0.5b` generates about 15 tokens per
+second and `llama3.2:1b` about 7.
 
 ## Licence
 
