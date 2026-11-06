@@ -16,7 +16,7 @@
   <img src="https://img.shields.io/badge/runs%20on-Linux%20%7C%20macOS%20%7C%20Windows-555" alt="Platforms">
 </p>
 
-By [HostFog Ltd](https://github.com/hostfog). HFee downloads GGUF models, runs
+By [HostFog Ltd](https://hostfog.com). HFee downloads GGUF models, runs
 them on the CPU and serves them over an Ollama-compatible API and an
 OpenAI-compatible API, so the apps and SDKs you already use work with it.
 Want a full chat website on top? See [HFee AI](https://github.com/hostfog/hfee-ai).
